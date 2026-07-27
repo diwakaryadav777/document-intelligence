@@ -1,0 +1,73 @@
+
+
+
+
+Create project directories and root config files
+
+Build backend: config, database, models, schemas
+
+Build backend services: OCR, classification, extraction, validation, search
+
+Build backend routers: documents, analytics
+
+Build FastAPI main app entry point
+
+Build Streamlit frontend app
+
+
+
+
+
+
+
+project/
+├── .env.example              ← copy to .env and add your OpenAI key
+├── requirements.txt
+├── run_backend.sh            ← starts FastAPI on :8000
+├── run_frontend.sh           ← starts Streamlit on :8501
+├── backend/
+│   ├── main.py               ← FastAPI app entry point
+│   ├── config.py             ← env-based settings
+│   ├── database.py           ← SQLAlchemy + SQLite setup
+│   ├── models/document.py    ← Document ORM model
+│   ├── schemas/document.py   ← Pydantic request/response schemas
+│   ├── routers/
+│   │   ├── documents.py      ← upload, list, get, delete, search, export
+│   │   └── analytics.py      ← summary, monthly trends, amount trends
+│   ├── services/
+│   │   ├── ocr_service.py         ← Tesseract + pdfplumber + PyMuPDF
+│   │   ├── classification_service.py  ← GPT + rule-based fallback
+│   │   ├── extraction_service.py  ← per-type field extraction + summary
+│   │   ├── validation_service.py  ← amount math, GST format, dates
+│   │   └── search_service.py      ← OpenAI embeddings + cosine search
+│   └── utils/file_utils.py
+└── frontend/app.py           ← Streamlit: Dashboard, Upload, Library, Search, Analytics
+
+
+
+
+To Run
+Step 1 — Setup
+
+
+
+cp .env.example .env
+# Edit .env and add your OPENAI_API_KEY
+
+pip install -r requirements.txt
+brew install tesseract        # macOS OCR engine
+
+
+
+Step 2 — Start backend
+
+
+./run_backend.sh
+# API docs at http://localhost:8000/docs
+
+
+Step 3 — Start frontend (new terminal)
+
+
+./run_frontend.sh
+# App at http://localhost:8501
